@@ -1,0 +1,83 @@
+<div ng-controller="UserCtrl">
+   
+    <h3>User Profile</h3>
+    <table class="table" ng-init="getdata()">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="add in adddata">
+                <td>{{add.title}}</td>
+                <td>{{add.category}}</td>
+                <td>{{add.description}}</td>
+                <td><img ng-src="{{add.image}}"></td>
+                <!-- <td><img src={{add.image}}></td>
+ -->
+                <!-- <td>{{add.image}}</td> -->
+                <td>
+                    <button class="btn btn-danger" ng-click="delete(add._id)">Delete Post </button>
+                </td>
+                <td>
+                    <button class="btn btn-warning" ng-click="edit(add)">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+        <!--  {{pageCount()}}
+ -->   
+
+        <ul class="pager">
+            <li ng-class="prevPageDisabled()">
+                <button class="btn btn-primary" ng-click="prevPage()" ng-disabled='pagination.skip === 0'><i class="fa fa-previous"></i>PREVIOUS</button>
+            </li>
+            <li ng-repeat="n in pageCount() track by $index" ng-class="{active: n == currentPage}" ng-click="setPage($index+1)">
+                <a href="#">{{$index+1}}</a>
+            </li>
+            <li ng-class="nextPageDisabled()">
+                <button class="btn btn-primary" ng-click="nextPage()" ng-disabled='islast'><i class="fa fa-next"></i>NEXT
+                </button>
+            </li>
+        </ul>
+    </table>
+    <!-- </div> -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <form ng-submit="update(data)" enctype="multipart/form-data">
+                        <div>
+                            <h5><span>TITLE:</span></h5>
+                            <input class="form-control" ng-model="data.title">
+                        </div>
+                        <div>
+                    </div>
+                        <div>
+                            <h5><span>DESCRIPTION:</span></h5>
+                            <textarea rows="4" cols="50" class="form-control" ng-model="data.description"></textarea>
+                        </div>
+                        <div>
+                            <img src="{{data.image}}">
+                            <input type="file" accept="image/x-png, image/gif, image/jpeg" name="image" id="imageedit">
+                        </div>
+                        <center>
+                            <!--  <button class="btn btn-primary">Add Post</button> -->
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </center>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

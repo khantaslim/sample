@@ -1,0 +1,391 @@
+welcome in linkites
+  <!-- <div ng-controller="FeedManagementCtrl" ng-init="getMessages()">
+
+    <div class="container">
+        <title>Facebook Style Popup Design</title>
+        <style>
+            @media only screen and (max-width : 100px) 
+            {
+                .chat-sidebar
+                {
+                    display: none !important;
+                }
+                
+                .chat-popup
+                {
+                    display: none !important;
+                }
+            }
+            
+            body
+            {
+                background-color: #e9eaed;
+            }
+            
+            .chat-sidebar
+            {
+                width: 200px;
+                position: fixed;
+                height: 100%;
+                right: 0px;
+                top: 0px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                border: 1px solid rgba(29, 49, 91, .3);
+            }
+            
+            .sidebar-name 
+            {
+                padding-left: 10px;
+                padding-right: 10px;
+                margin-bottom: 4px;
+                font-size: 12px;
+            }
+            
+            .sidebar-name span
+            {
+                padding-left: 5px;
+            }
+            
+            .sidebar-name a
+            {
+                display: block;
+                height: 100%;
+                text-decoration: none;
+                color: inherit;
+            }
+            
+            .sidebar-name:hover
+            {
+                background-color:#e1e2e5;
+            }
+            
+            .sidebar-name img
+            {
+                width: 32px;
+                height: 32px;
+                vertical-align:middle;
+            }
+            
+            .popup-box
+            {
+                display: none;
+                position: fixed;
+                bottom: 0px;
+                right: 220px;
+                height: 285px;
+                background-color: rgb(237, 239, 244);
+                width: 150px;
+                border: 1px solid rgba(29, 49, 91, .3);
+            }
+            
+            .popup-box .popup-head
+            {
+                background-color: #6d84b4;
+                padding: 5px;
+                color: white;
+                font-weight: bold;
+                font-size: 14px;
+                clear: both;
+            }
+            
+            .popup-box .popup-head .popup-head-left
+            {
+                float: left;
+            }
+            
+            .popup-box .popup-head .popup-head-right
+            {
+                float: right;
+                opacity: 0.5;
+            }
+            
+            .popup-box .popup-head .popup-head-right a
+            {
+                text-decoration: none;
+                color: inherit;
+            }
+            
+            .popup-box .popup-messages
+            {
+                height: 100%;
+                overflow-y: scroll;
+            }
+            
+
+
+        </style>
+        
+        <script>
+            //this function can remove a array element.
+            Array.remove = function(array, from, to) {
+                var rest = array.slice((to || from) + 1 || array.length);
+                array.length = from < 0 ? array.length + from : from;
+                return array.push.apply(array, rest);
+            };
+        
+            //this variable represents the total number of popups can be displayed according to the viewport width
+            var total_popups = 0;
+            
+            //arrays of popups ids
+            var popups = [];
+        
+            //this is used to close a popup
+            function close_popup(id)
+            {
+                for(var iii = 0; iii < popups.length; iii++)
+                {
+                    if(id == popups[iii])
+                    {
+                        Array.remove(popups, iii);
+                        
+                        document.getElementById(id).style.display = "none";
+                        
+                        calculate_popups();
+                        
+                        return;
+                    }
+                }   
+            }
+        
+            //displays the popups. Displays based on the maximum number of popups that can be displayed on the current viewport width
+            function display_popups()
+            {
+                var right = 220;
+                
+                var iii = 0;
+                for(iii; iii < total_popups; iii++)
+                {
+                    if(popups[iii] != undefined)
+                    {
+                        var element = document.getElementById(popups[iii]);
+                        element.style.right = right + "px";
+                        right = right + 320;
+                        element.style.display = "block";
+                    }
+                }
+                
+                for(var jjj = iii; jjj < popups.length; jjj++)
+                {
+                    var element = document.getElementById(popups[jjj]);
+                    element.style.display = "none";
+                }
+            }
+            
+            //creates markup for a new popup. Adds the id to popups array.
+            function register_popup(id, name)
+            {
+                
+                for(var iii = 0; iii < popups.length; iii++)
+                {   
+                    //already registered. Bring it to front.
+                    if(id == popups[iii])
+                    {
+                        Array.remove(popups, iii);
+                    
+                        popups.unshift(id);
+                        
+                        calculate_popups();
+                        
+                        
+                        return;
+                    }
+                }               
+                
+                var element = '<div class="popup-box chat-popup" id="'+ id +'">';
+                element = element + '<div class="popup-head">';
+                element = element + '<div class="popup-head-left">'+ name +'</div>';
+                element = element + '<div class="popup-head-right"><a href="javascript:close_popup(\''+ id +'\');">&#10005;</a></div>';
+                element = element + '<div style="clear: both"></div></div><div class="popup-messages"></div></div>';
+                
+                document.getElementsByTagName("body")[0].innerHTML = document.getElementsByTagName("body")[0].innerHTML + element;  
+        
+                popups.unshift(id);
+                        
+                calculate_popups();
+                
+            }
+            
+            //calculate the total number of popups suitable and then populate the toatal_popups variable.
+            function calculate_popups()
+            {
+                var width = window.innerWidth;
+                if(width < 540)
+                {
+                    total_popups = 0;
+                }
+                else
+                {
+                    width = width - 200;
+                    //320 is width of a single popup box
+                    total_popups = parseInt(width/320);
+                }
+                
+                display_popups();
+                
+            }
+            
+           
+            window.addEventListener("resize", calculate_popups);
+            window.addEventListener("load", calculate_popups);
+            
+        </script>
+    
+        <div class="chat-sidebar">
+            <div class="sidebar-name">
+                Pass username and display name to register popup
+                <br>
+                 <br>
+                  <br>
+                   <br>
+                    <br>
+                     <br>
+                      <br>
+                       <br>
+                        <br>
+                <a href="javascript:register_popup('Taslim', 'Taslim');">
+                   
+                    <span>Taslim</span>
+                </a>
+            </div>
+            <ul>
+                    <li ng-repeat="list in allchatlist"><a ng-click="getreciveid(list._id)"> {{list.local.email}}&nbsp;&nbsp;{{list.isOnline}}</li></a>
+                </ul>
+        </div>
+        
+   </div>  -->
+    <div class="row">
+        <div ng-controller="FeedManagementCtrl" ng-init="getMessages()">
+
+ <div class="col-sm-8" id="chatWrap">
+        <h1>Chat</h1>
+          
+           <div class="panel panel-primary" id="myModal" role="popup">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-comment"></span> Chat Box 
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu slidedown">
+                            <li><a href="#"><span class="glyphicon glyphicon-refresh">
+                            </span>Refresh</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-ok-sign">
+                            </span>Available</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove">
+                            </span>Busy</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-time"></span>
+                                Away</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-off"></span>
+                                Sign Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+         
+                <ul>
+                    <li ng-repeat="msg in allMsgs track by $index">Email:&nbsp;&nbsp;{{msg.senderEmail}}&nbsp;&nbsp;{{msg.text}}</li>
+                </ul>
+          
+            <form ng-submit="sendMsg(data)">
+                <input type="text" ng-model="msg.text" />
+                <button  class="btn btn-primary"><i class="fa fa-send"></i>Send</button>
+            </form>
+        </div>
+        </div>
+
+        <div class="col-sm-4">
+                <h1>Chat list</h1>
+          
+                <ul>
+                    <li ng-repeat="list in allchatlist"><a ng-click="getreciveid(list._id)">Email:{{list.local.email}}&nbsp;&nbsp;{{list.isOnline}}</li></a>
+                </ul>
+            </div>
+       
+</div>
+  
+<!-- 
+<br>
+<br>
+<br>
+  
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-primary" id="myModal" role="popup">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-comment"></span> Chat
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu slidedown">
+                            <li><a href="#"><span class="glyphicon glyphicon-refresh">
+                            </span>Refresh</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-ok-sign">
+                            </span>Available</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove">
+                            </span>Busy</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-time"></span>
+                                Away</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-off"></span>
+                                Sign Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="panel-footer">
+                   <!--  <div class="input-group">
+                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                                Send</button>
+                        </span>
+                    </div> -->
+            <!--         <div id="chatWrap">
+         
+                <ul>
+                    <li ng-repeat="msg in allMsgs track by $index">Email:&nbsp;&nbsp;{{msg.senderEmail}}&nbsp;&nbsp;{{msg.text}}</li>
+                </ul>
+            </div>
+            <form ng-submit="sendMsg(data)">
+                <input type="text" ng-model="msg.text" />
+                <button  class="btn btn-primary"><i class="fa fa-send"></i>Send</button>
+            </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    
+<!-- <!DOCTYPE html>
+<html>
+ng-init="getMessages()"
+<head>
+    <title>Edit Data</title>
+</head>
+
+<body ng-controller="UserCtrl" ng-init="edit()">
+    <div class="form-group">
+        <label class="control-label col-md-3">Title</label>
+        <div class="col-md-6">
+            <input type="text" ng-model="adddata.title" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3">Category</label>
+        <div class="col-md-6">
+            <input type="text" ng-model="adddata.category" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3">Description</label>
+        <div class="col-md-6">
+            <input type="text" ng-model="adddata.description" class="form-control" />
+        </div>
+    </div>
+    <button class="btn btn-warning" ng-click="update()">UPDATE</button>
+</body>
+
+</html>
+ -->

@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <title>FORGOT PASSWORD</title>
+</head>
+
+<body>
+    <center>
+        <div class="jumbotron" style="margin: 50px 50px 50px 200px;" ng-app="auth" ng-controller="AuthCtrl">
+            <form>
+             <button type="button" class="close" data-dismiss="login">&times;</button>
+                <h4>Forgot Password ?</h4>
+                <p>Enter your e-mail address below to reset your password.</p>
+                <input type="email" name="email" ng-model="got.email" />
+                <br>
+                <br>
+                <button class="btn btn-primary" type="button" ng-click="forgot(got)">Submit</button>
+            </form>
+        </div>
+    </center>
+</body>
+
+</html>

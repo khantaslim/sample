@@ -1,0 +1,71 @@
+<div class="container" ng-app="category" ng-controller="CategoryCtrl">
+    <div class="jumbotron" style="margin: 50px 50px 50px 200px; ">
+        <!-- <button type="button" ng-click="logout()"> <i class="fa fa-sign-out"></i>Logout!</button>
+ -->
+        <!--  <div ng-app="category" ng-controller="CategoryCtrl"> -->
+        <h2> ADD POST</h2>
+        <form name="newForm" role="form" enctype="multipart/form-data" ng-submit="addPost(add)">
+            <!-- <form ng-submit="addPost(add)">
+ -->
+            <div>
+                <h5><span>TITLE:</span></h5>
+                <input class="form-control" ng-model="add.title">
+            </div>
+            <div>
+                <h5><!-- <span>CATEGORY:</span> --> <label>CATEGORY: </label></h5>
+                <select ng-model="add.category">
+                    <option value="You Choose 1">demo1</option>
+                    <option value="You Choose 2">demo2</option>
+                    <option value="You Choose 3">demo3</option>
+                    <option value="You Choose 4">demo4</option>
+                    <option value="You Choose 5">demo5</option>
+                </select>
+            </div>
+            <br>
+            <div>
+                <input type="file" accept="image/x-png, image/gif, image/jpeg" name="image" id="image">
+            </div>
+            <div>
+                <h5><span>DESCRIPTION:</span></h5>
+                <textarea rows="4" cols="50" class="form-control" ng-model="add.description"></textarea>
+            </div>
+            <center>
+                <button class="btn btn-primary">Add Post</button>
+            </center>
+            </tr>
+            <!-- <button class="btn btn-info" ng-click="update()">Update</button>
+            </td>
+ -->
+        </form>
+    </div>
+</div>
+<!-- <div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox-title">
+                    <h5>Firebase Category Data</h5>
+                </div>
+                <div class="ibox-content">
+                    <table id="tablecategorycollection" class="table table-bordered">
+                        <thead class="text-center">
+                            <tr>
+                                <th class="text-center">Title</th>                                
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr ng-repeat="category in categorycollection">
+                                <td>{{category.data.title}}</td>                               
+                                <td>
+                                    <a type="button" class="btn  btn-xs newacbtn" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i> </a>
+                                    <a type="button" class="btn  btn-xs newacbtn" data-toggle="tooltip" title="Delete" ><i class="glyphicon glyphicon-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox-title">
+                    <h5>Firebase Events Data</h5>
+                </div>
+                <div class="ibox-content">
+                    <table id="tableeventcollection" class="table table-bordered">
+                        <thead class="text-center">
+                            <tr>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Location</th>
+                                <!-- <th class="text-center">Photos</th>
+                                <th class="text-center">Videos</th> -->
+                                <th class="text-center">Added By</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr ng-repeat="event in eventcollection">
+                                <td>{{event.data.eventName}}</td>
+                                <td>{{event.data.eventLocation}}</td>
+                                <!-- <td>{{event.data.eventPhotos}}</td>
+                                <td>{{event.data.eventVideoDataString}}</td> -->
+                                <td>{{event.data.addedby}}</td>
+                                <td>
+                                    <a type="button" class="btn  btn-xs newacbtn" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i> </a>
+                                    <a type="button" class="btn  btn-xs newacbtn" data-toggle="tooltip" title="Delete" ><i class="glyphicon glyphicon-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
